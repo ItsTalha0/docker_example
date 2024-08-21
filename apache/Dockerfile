@@ -3,6 +3,8 @@ FROM debian
 RUN apt update
 RUN apt install -y apache2 
 COPY html /var/www/html
+COPY cgi-bin/* /usr/lib/cgi-bin/
+RUN chmod -R  a+rwx /usr/lib/cgi-bin/*
 WORKDIR /test
 COPY start.sh ./
 RUN chown root start.sh

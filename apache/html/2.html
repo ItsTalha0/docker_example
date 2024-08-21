@@ -11,7 +11,9 @@ th {
 		</style>
 	</head>
 	<body>
-		<button id="btn" onclick="getData()"> Fetch Latest table </button>
+		<p id="test"></p>	<br>	
+		<button id="btn" onclick="getData2()"> Fetch Latest table </button><br><br>
+		<button id="tst_btn" onclick="getData()"> Fetch Latest table </button>
 		<br><br>
 		<table id="myTable">
 			<tbody>
@@ -35,8 +37,9 @@ th {
 			let id = document.getElementById("id").value;
 			let name = document.getElementById("name").value;
 			let gender = document.getElementById("gender").value;
-			console.log(id," ",name," ",gender);
-			Http.send();
+			let body = id+",'"+name+"','"+gender+"'";
+			console.log(body);
+			Http.send(body);
 
 
 			//Http.onreadystatechange = (e) => {
@@ -54,11 +57,11 @@ th {
 		function addRow(res_arr) {
 			if (res_arr != []){
 				let table = document.getElementById("myTable");
-				while(true){
-					try{
-						table.deleteRow(1)
-					} catch(err){ break; }
-				}
+				//while(true){
+				//	try{
+				//		table.deleteRow(1)
+				//	} catch(err){ break; }
+				//}
 
 				//table.remove(); 
 
@@ -83,7 +86,29 @@ th {
 			//Http.onreadystatechange = (e) => {
 			Http.onload = () => {
 
-				(parseResult(Http.responseText).slice(0,-1)).forEach(addRow);
+				//console.log(parseResult(Http.responseText));
+				(parseResult(Http.responseText)).forEach(addRow);
+			}
+			//while( Http.readyState != XMLHttpRequest.DONE )
+			//{
+			//	console.log("waiting");
+			//}
+			//console.log(Http.responseTest);
+		}
+		function getData2()
+		{
+			const Http = new XMLHttpRequest();
+			const url='http://localhost:8080/cgi-bin/fi';
+			Http.open("GET", url);
+			Http.send();
+
+			//Http.onreadystatechange = (e) => {
+			Http.onload = () => {
+
+				//console.log(parseResult(Http.responseText));
+				//(parseResult(Http.responseText)).forEach(addRow);
+				let par = document.getElementById("test");
+				par.innerText= Http.responseText;
 			}
 			//while( Http.readyState != XMLHttpRequest.DONE )
 			//{

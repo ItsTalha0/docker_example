@@ -1,0 +1,8 @@
+#!/usr/bin/bash
+
+echo "Content-type: text/html";
+echo "";
+read inp;
+psql -h 172.17.0.2 -U postgres -c "insert into legend values($inp);"
+#psql -h 172.17.0.2 -U postgres -c "\copy (Select * From legend) To '/tmp/test.csv' With CSV DELIMITER ',' HEADER" ;
+#cat /tmp/test.csv;
