@@ -8,8 +8,8 @@ RUN chown postgres /var/run/postgresql
 USER postgres
 WORKDIR /var/lib/postgresql
 COPY runs.sh ./
+COPY db_init.sql ./
 RUN mkdir db
-RUN initdb -D db
 # pg_ctl start -D db
 EXPOSE 5432
 CMD ["sh","runs.sh"]
