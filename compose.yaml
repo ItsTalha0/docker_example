@@ -1,0 +1,18 @@
+services:
+    db:
+        build: pg/
+        tty: true
+        ports:
+            - "5432:5432"
+        volumes:
+            - v1:/var/lib/postgresql/db
+            
+    web:
+        build: apache/
+        tty: true
+        ports:
+            - "8080:80"
+        depends_on:
+            - db
+volumes:
+    v1:
