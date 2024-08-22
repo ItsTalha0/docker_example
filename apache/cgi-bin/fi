@@ -2,7 +2,7 @@
 
 echo "Content-type: text/html";
 echo ""
-psql -h 172.17.0.2 -U postgres -c "select * from legend;";
+psql -h 172.28.5.2 -U postgres -c "select * from legend;";
 #psql -h 172.17.0.2 -U postgres -c "\copy (Select * From legend) To '/tmp/test.csv' With CSV DELIMITER ',' HEADER" ;
 #cat /tmp/test.csv;
 #rm /tmp/test.csv;

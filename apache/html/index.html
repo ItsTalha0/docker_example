@@ -11,7 +11,8 @@ th {
 		</style>
 	</head>
 	<body>
-		<button id="btn" onclick="getData()"> Fetch Latest table </button>
+		<p id="test"></p>	<br>	
+		<button id="btn" onclick="getData2()"> Fetch Latest table </button><br><br>
 		<br><br>
 		<table id="myTable">
 			<tbody>
@@ -22,7 +23,14 @@ th {
 		<input type="text" id="id">Enter id of new to add</input>	
 		<input type="text" id="name">Enter name of new to add</input>	
 		<input type="text" id="gender">Enter gender of new to add</input>	
+		<br>
 		<button id="sbt" onclick="sendData()">Add Entry </button>
+		<br>
+		<br>
+
+		<input type="text" id="d_id">Enter id of new to delete</input>	
+		<br>
+		<button id="d_sbt" onclick="sendData_d()">Add Entry </button>
 
 
 	</body>
@@ -35,32 +43,35 @@ th {
 			let id = document.getElementById("id").value;
 			let name = document.getElementById("name").value;
 			let gender = document.getElementById("gender").value;
-			console.log(id," ",name," ",gender);
-			Http.send();
+			let body = id+",'"+name+"','"+gender+"'";
+			console.log(body);
+			Http.send(body);
 
 
-			//Http.onreadystatechange = (e) => {
+			Http.onload = () => {
+				getData2();
+			}
+		}
+			function sendData_d() {
+			const Http = new XMLHttpRequest();
+			const url='http://localhost:8080/cgi-bin/del';
+			Http.open("POST", url);
+			let id = document.getElementById("d_id").value;
+			let body = id;
+			console.log(body);
+			Http.send(body);
+
+
 			Http.onload = () => {
 
-				//(parseResult(Http.responseText).slice(0,-1)).forEach(addRow);
+				getData2();	
 			}
-			//while( Http.readyState != XMLHttpRequest.DONE )
-			//{
-			//	console.log("waiting");
-			//}
-			//console.log(Http.responseTest);
 		}
-			
+
 		function addRow(res_arr) {
 			if (res_arr != []){
 				let table = document.getElementById("myTable");
-				while(true){
-					try{
-						table.deleteRow(1)
-					} catch(err){ break; }
-				}
 
-				//table.remove(); 
 
 				let row = table.insertRow(-1); // We are adding at the end
 
@@ -80,16 +91,23 @@ th {
 			Http.open("GET", url);
 			Http.send();
 
-			//Http.onreadystatechange = (e) => {
 			Http.onload = () => {
 
-				(parseResult(Http.responseText).slice(0,-1)).forEach(addRow);
+				(parseResult(Http.responseText)).forEach(addRow);
 			}
-			//while( Http.readyState != XMLHttpRequest.DONE )
-			//{
-			//	console.log("waiting");
-			//}
-			//console.log(Http.responseTest);
+		}
+		function getData2()
+		{
+			const Http = new XMLHttpRequest();
+			const url='http://localhost:8080/cgi-bin/fi';
+			Http.open("GET", url);
+			Http.send();
+
+			Http.onload = () => {
+
+				let par = document.getElementById("test");
+				par.innerText= Http.responseText;
+			}
 		}
 		function parseResult(result) {
 			var resultArray = [];

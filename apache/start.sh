@@ -1,8 +1,8 @@
 #!/bin/bash
 
-apachectl start
+#apachectl start
 a2enmod cgid
-sleep 2
-apachectl stop
+#sleep 2
+#apachectl stop
 apachectl start
 bash

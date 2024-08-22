@@ -3,16 +3,30 @@ services:
         build: pg/
         tty: true
         ports:
-            - "5432:5432"
+            - 5432:5432
         volumes:
             - v1:/var/lib/postgresql/db
+        networks:
+            cust:
+                ipv4_address: 172.28.5.2
             
     web:
         build: apache/
         tty: true
         ports:
-            - "8080:80"
+            - 8080:80
+        networks:
+            cust:
+                ipv4_address: 172.28.5.3
         depends_on:
             - db
 volumes:
     v1:
+networks:
+  cust:
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.28.0.0/16
+          ip_range: 172.28.5.0/24
+          gateway: 172.28.5.254
