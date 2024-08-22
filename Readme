@@ -1,6 +1,9 @@
 #mount point for persistent volume is /var/lib/postgresql/db
-docker run -it -d -v v1:/var/lib/postgresql/db -p 5432:5432 postgres
-docker run -it -d -p 8080:80 apache_web
+docker run -it -d -v v1:/var/lib/postgresql/db -p 5432:5432 postgres #for debugging pg containe
+docker run -it -d -p 8080:80 apache_web #for debugging apache container
+
+
+
 
 docker compose up -d #for starting the whole project
 docker compose down #for stoping the whole thing
